@@ -1,6 +1,13 @@
+from operator import itemgetter
+
 listTasks = []
 input_answer = ''
 
+# Function to sort the list
+def sort_list():
+    global listTasks
+    listTasks = sorted(listTasks, key=itemgetter(1))
+    
 # Function to add a task to the list
 def add_task():
     taskName = input('Task Name= ')
@@ -9,6 +16,7 @@ def add_task():
             priorityTask = int(input('Task Priority (1 and 3)= '))
             if 1 <= priorityTask <= 3:
                 listTasks.append((taskName, priorityTask))
+                sort_list()
                 break
             else:
                 print("Use a number between 1 and 3")
@@ -22,6 +30,7 @@ def delete_task():
     for task in listTasks:
         if task[0] == taskDelete:
             listTasks.remove(task)
+            sort_list()
             task_found = True
             break
     if not task_found:
@@ -34,6 +43,7 @@ while input_answer != 'quit':
     elif input_answer == 'Delete task':
         delete_task()
     elif input_answer == 'Quit':
+        sort_list()
         print('List of Tasks:' + str(listTasks))
         break
     else:
